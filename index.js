@@ -5,41 +5,58 @@ import fetch from "node-fetch";
 import bigDecimal from "js-big-decimal";
 import cache from "memory-cache";
 import rateLimit from "express-rate-limit";
-import currencyList from "./currencyList.js"
+import currencyList from "./currencyList.js";
 
 const app = express();
 var port = process.env.PORT || 3000;
-let cacheTimeOut = 1000 * 60 * 60;
+let cacheTimeOut = 30 * 60 * 1000;
 const limiter = rateLimit({
-  windowMs: 10 * 60 * 1000,
-  max: 300,
-  message: { status: 429, result: "error", message: "Too many requests" },
+  windowMs: 10 * 60 * 1000, // minutes * seconds * milliseconds
+  max: 450, // 450 = 7.5 minutes of use
+  message: { 
+    status: 429,
+    result: false,
+    message: "Too many requests"
+  },
 });
 app.use(cors());
 app.use(express.json());
 app.use(limiter);
 
-app.get("/api", async (req, res) => {
+app.get('/', (req, res)=>{
+  res.sendFile('index.html',{
+    root: './'
+  })
+})
+
+app.get("/convert", async (req, res) => {
   let { from, to, amount } = req.query;
   let xy = [from.toLowerCase(), to.toLowerCase()].sort();
   let x_y = xy.join("-");
   if (!Number.isInteger(Number(amount))) {
     return res.json({
-      result: "error",
+      status: 400,
+      result: false,
       message: "conversion amount must be an Integer",
     });
   }
   if (xy[0] == xy[1]) {
     return res.json({
-      result: "error",
+      status: 400,
+      result: false,
       message: "From and To currency cannot be same",
     });
   }
-  if(!currencyList.includes(from.toUpperCase()) || !currencyList.includes(to.toUpperCase())){
+  if (
+    !currencyList.includes(from.toUpperCase()) ||
+    !currencyList.includes(to.toUpperCase())
+  ) {
     return res.json({
-      result: "error",
-      message: "invalid currency code, or the currency code doesn't exist in database"
-    })
+      status: 400,
+      result: false,
+      message:
+        "invalid currency code, or the currency code doesn't exist in database",
+    });
   }
   if (cache.get(x_y)) {
     let myCache = cache.get(x_y);
@@ -69,7 +86,8 @@ app.get("/api", async (req, res) => {
   } catch (e) {
     console.log(e, "Error occured while fetching and working on data");
     res.json({
-      result: "error",
+      status: 500,
+      result: false,
       message: "There was an error while fetching/working on data.",
     });
   }
@@ -97,10 +115,12 @@ function convertRates(arr, amount, prevTime) {
   let parsedRate = Number(rateOfConvertion);
   var finalAmount = bigDecimal.multiply(parsedRate, amount);
   let resObj = {
-    result: "success",
+    status: 200,
+    result: true,
     conversion,
+    amount,
     final_converted_amount: finalAmount,
-    last_updated_at_unix_time: prevTime || Date.now(),
+    last_updated_unix_timestamp: prevTime || Date.now(),
   };
   return resObj;
 }
