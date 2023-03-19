@@ -29,8 +29,8 @@ app.get('/', (req, res)=>{
   })
 })
 
-app.get('/logo.png', (req, res)=>{
-  res.sendFile('logo.png',{
+app.get('/logo.jpg', (req, res)=>{
+  res.sendFile('logo.jpg',{
     root: './'
   })
 })
