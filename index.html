@@ -1,28 +1,63 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Primary Meta Tags -->
     <title>Documentation - Exchange Rate API</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="Convert currencies instantly with our Currency Converter API. Get real-time exchange rates and accurate currency conversions for over 150 currencies worldwide.">
-    <meta name="keywords" content="Currency Converter API, Real-time exchange rates, Foreign Exchange API", "Global currency rates", "Free currency conversion", "Live currency data", "Currency conversion service" >
-    <meta property="og:title" content="Exchange Rates API">
-    <meta property="og:image" content="https://currency-rates.onrender.com/logo.jpg" />
-    <meta property="og:image:secure_url" content="https://currency-rates.onrender.com/logo.jpg" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="title" content="Documentation - Exchange Rate API" />
+    <meta
+      name="description"
+      content="Convert currencies instantly with our Currency Converter API. Get real-time exchange rates and accurate currency conversions for over 150 currencies worldwide."
+    />
+    <meta name="keywords" content="Currency Converter API, Real-time exchange
+    rates, Foreign Exchange API", "Global currency rates", "Free currency
+    conversion", "Live currency data", "Currency conversion service" >
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://currency-rates.onrender.com/" />
+    <meta property="og:title" content="Documentation - Exchange Rate API" />
+    <meta
+      property="og:description"
+      content="Convert currencies instantly with our Currency Converter API. Get real-time exchange rates and accurate currency conversions for over 150 currencies worldwide."
+    />
+    <meta
+      property="og:image"
+      content="https://currency-rates.onrender.com/logo.jpg"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://currency-rates.onrender.com/logo.jpg"
+    />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="100" />
     <meta property="og:image:height" content="100" />
     <meta property="og:image:alt" content="USD note to our currency" />
-    <meta property="og: description" content="Convert currencies instantly with our Currency Converter API. Get real-time exchange rates and accurate currency conversions for over 150 currencies worldwide.">
-    <meta property="og:type" content="website">
-    <meta property ="og:url" content="https://currency-rates.onrender.com/">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://currency-rates.onrender.com/"
+    />
+    <meta
+      property="twitter:title"
+      content="Documentation - Exchange Rate API"
+    />
+    <meta
+      property="twitter:description"
+      content="Convert currencies instantly with our Currency Converter API. Get real-time exchange rates and accurate currency conversions for over 150 currencies worldwide."
+    />
+    <meta
+      property="twitter:image"
+      content="https://currency-rates.onrender.com/logo.jpg"
+    />
+
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -223,7 +258,7 @@
 
             <p class="card-text">To convert 100 USD to EUR:</p>
 
-            <pre><code><span id="origin"></span></span>/convert?from=USD&to=EUR&amount=100</code></pre>
+            <pre><code><span id="origin"></span>/convert?from=USD&to=EUR&amount=100</code></pre>
           </section>
 
           <section class="mb-4">
@@ -307,10 +342,10 @@
     </div>
     <script>
       function fetchNewData() {
-        fetch('/convert?amount=100&from=USD&to=EUR')
+        fetch("/convert?amount=100&from=USD&to=EUR")
           .then((r) => r.json())
           .then((data) => {
-            console.log(data)
+            console.log(data);
             document.querySelector("#exampleRes").innerText = JSON.stringify(
               data,
               null,
