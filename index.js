@@ -29,6 +29,12 @@ app.get('/', (req, res)=>{
   })
 })
 
+app.get('/logo.png', (req, res)=>{
+  res.sendFile('logo.png',{
+    root: './'
+  })
+})
+
 app.get("/convert", async (req, res) => {
   let { from, to, amount } = req.query;
   let xy = [from.toLowerCase(), to.toLowerCase()].sort();
